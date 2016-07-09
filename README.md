@@ -31,6 +31,10 @@ When it comes to writing test code, sometimes you need to know if an object, e.g
 ## Installation
 
 ```
+npm install
+npm test
+```
+```
 import traceMethodCalls from './proxy-stub'
 ```
 
