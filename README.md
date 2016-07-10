@@ -21,7 +21,7 @@ assert.equal(tracer.callCount(), 2);
 The proxy maintains the original object's functionality and merely increments a counter before forwarding the method call.
 
 ## Stubbing an object
-Unit testing oftens requires passing mocked and stubbed objects into the constructor. For example an object's constructor may require an object representing a database api and connection; however we would not want to pass a real database connection during testing for a simple unit test. The tracer can block calls return a void promise instead. 
+Unit testing oftens requires passing mocked and stubbed objects into the constructor. For example an object's constructor may require an object representing a database api and connection; however we would not want to pass a real database connection during testing for a simple unit test. The tracer can block calls and return a void promise instead. 
 ```
 const tracer = traceMethodCalls({ obj, stubMethod:true });
 tracer.proxy.multiply(1, 2)
@@ -30,7 +30,7 @@ tracer.proxy.multiply(1, 2)
     assert.equal(tracer.callCount(), 1);
   });
 ```
-You can make the tracer return a rejected promise as well by passing `throws: false`. 
+Alternatively you can make the tracer return a rejected promise by passing `throws: false` -- this can be useful for testing failed api calls, e.g. a database error.
 
 
 ## Installation
