@@ -2,6 +2,9 @@
 
 A simple utility function which can aid in testing by allowing you to trace and/or stub method calls on an object.
 
+## Motivation
+When it comes to writing test code, sometimes you need to know if an object, e.g. a database or logger instance has been called by the function under test. Libraries such as Sinon are usefull for spying on single methods, e.g. `sinon.spy(object, "method")`; however, they fall short when it comes to spying on all methods of an object.
+
 ## A simple method call tracer:
 ```
 const obj = {
@@ -9,41 +12,37 @@ const obj = {
   multiply: (x, y) => x * y,
   square: (x) => x * x
 };
-tracer = traceMethodCalls({ obj });
+const tracer = traceMethodCalls({ obj });
 tracer.proxy.multiply(1, 2);
 tracer.proxy.square(2);
 assert.equal(tracer.callCount(), 2);
 ```
 
-## Stubbing an object
+The proxy maintains the original object's functionality and merely increments a counter before forwarding the method call.
 
+## Stubbing an object
+Unit testing oftens requires passing mocked and stubbed objects into the constructor. For example an object's constructor may require an object representing a database api and connection; however we would not want to pass a real database connection during testing for a simple unit test. The tracer can block calls return a void promise instead. 
 ```
+const tracer = traceMethodCalls({ obj, stubMethod:true });
 tracer.proxy.multiply(1, 2)
   .then(value => {
     assert.equal(value, undefined);
     assert.equal(tracer.callCount(), 1);
   });
 ```
+You can make the tracer return a rejected promise as well by passing `throws: false`. 
 
-## Motivation
-When it comes to writing test code, sometimes you need to know if an object, e.g. a database or logger instance has been called by the function under test. Libraries such as Sinon are usefull for spying on single methods, e.g. `sinon.spy(object, "method")`; however, they fall short when it comes to spying on all methods of an object.
 
 ## Installation
-
 ```
-npm install
-npm test
+npm install --save-dev proxy_stub_tracer
 ```
 ```
-import traceMethodCalls from './proxy-stub'
+import traceMethodCalls from 'proxy_stub_tracer'
 ```
 
 ## Requirements
 This utility relies on ES6 proxies. If you are writing NodeJS code, then you will need to use Node 6.0+.
-
-## API Reference
-
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
 
 ## Tests
 
