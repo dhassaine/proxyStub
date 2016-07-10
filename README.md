@@ -30,7 +30,7 @@ tracer.proxy.multiply(1, 2)
     assert.equal(tracer.callCount(), 1);
   });
 ```
-Alternatively you can make the tracer return a rejected promise by passing `throws: false` -- this can be useful for testing failed api calls, e.g. a database error.
+Alternatively you can make the tracer return a rejected promise by passing `throws: true` -- this can be useful for testing failed api calls, e.g. a database error.
 
 
 ## Installation
