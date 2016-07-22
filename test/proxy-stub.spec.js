@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import traceMethodCalls from './proxy-stub';
+import traceMethodCalls from '../src/proxy-stub';
 
 function makeBasicObj() {
   return {
