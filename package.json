@@ -1,6 +1,6 @@
 {
   "name": "proxy_stub_tracer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Stub and trace method calls on objects/classes",
   "main": "lib/index.js",
   "scripts": {
